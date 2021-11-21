@@ -8,7 +8,14 @@
         {% endblock %}
     </head>
     <body>
-		hoi
-        {% block body %}{% endblock %}
+        {% block body %}
+			{{ form(form) }}
+			<p>
+			<label>Answer 1</label><br />
+			<textarea disabled>{{answer1}}</textarea><br />
+			<label>Answer 2</label><br />
+			<textarea disabled>{{answer2}}</textarea>
+			</p>
+		{% endblock %}
     </body>
 </html>
