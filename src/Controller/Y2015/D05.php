@@ -8,7 +8,7 @@ class D05 extends AbstractController {
 	public function puzzle( $puzzle ): Response {
 
 		$answer1 = $this->puzzle1( $puzzle );
-		$answer2 = 'Empty solution 2';
+		$answer2 = $this->puzzle2( $puzzle );
 
 		return $this->json(
 			array(
@@ -59,6 +59,21 @@ class D05 extends AbstractController {
 			}
 
 			if ( $bad === 0 && $double === 1 && $count > 2 ) {
+				$total++;
+			}
+		}
+
+		return $total;
+	}
+
+	private function puzzle2( $puzzle ): string {
+		$lines = explode( "\r\n", trim( $puzzle ) );
+
+		$total = 0;
+
+		foreach ( $lines as $line ) {
+			$result = preg_match( '#(?=.*(..).*\1)(?=.*(.).\2)#', $line );
+			if ( $result ) {
 				$total++;
 			}
 		}
