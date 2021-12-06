@@ -22,41 +22,53 @@ class D06 extends AbstractController {
 	private function puzzle1($puzzle){
 		$fishes = explode( ",", trim( $puzzle ) );
 
-		return count($this->generate_fish($fishes, 80));
+		return $this->place_fishes($fishes, 80);
 	}
 
 	private function puzzle2($puzzle){
 		$fishes = explode( ",", trim( $puzzle ) );
 
-		$fishes = $this->generate_fish($fishes, 128);
-
-		return 1;
+		$fishes = $this->place_fishes($fishes, 256);
+		return $fishes;
 	}
 
-	private function generate_fish($fishes, $days){
+	private function place_fishes($puzzle, $days){
+		$pond = [0,0,0,0,0,0,0,0,0];
+
+		foreach($puzzle as $fish){
+			$pond[intval($fish)]++;
+		}
 
 		$i = 1;
 		while($i <= $days){
-			$new = [];
-			$c = 0;
-			foreach($fishes as $fish){
-				if($fish > 0){
-					$fishes[$c]--;
-				}
+			$bucket = [];
 
-				if($fish == 0){
-					$fishes[$c] = 6;
-					$new[] = 8;
-				}
+			$bucket[7] = $pond[8];
+			$bucket[6] = $pond[7];
+			$bucket[5] = $pond[6];
+			$bucket[4] = $pond[5];
+			$bucket[3] = $pond[4];
+			$bucket[2] = $pond[3];
+			$bucket[1] = $pond[2];
+			$bucket[0] = $pond[1];
+			$bucket[9] = $pond[0];
+			$bucket[8] = 0;
 
-				$c++;
+			if($bucket[9] !== 0) {
+				$bucket[6] += $bucket[9];
+				$bucket[8] += $bucket[9];
+				$bucket[9] = 0;
 			}
-
-			$fishes = array_merge($fishes, $new);
+			$pond = $bucket;
 
 			$i++;
 		}
 
-		return $fishes;
+		$total = 0;
+		foreach($pond as $fish){
+			$total = $total + $fish;
+		}
+
+		return $total;
 	}
 }
