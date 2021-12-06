@@ -51,14 +51,9 @@ class D06 extends AbstractController {
 			$bucket[2] = $pond[3];
 			$bucket[1] = $pond[2];
 			$bucket[0] = $pond[1];
-			$bucket[9] = $pond[0];
-			$bucket[8] = 0;
+			$bucket[6] += $pond[0];
+			$bucket[8] = 0 + $pond[0];
 
-			if($bucket[9] !== 0) {
-				$bucket[6] += $bucket[9];
-				$bucket[8] += $bucket[9];
-				$bucket[9] = 0;
-			}
 			$pond = $bucket;
 
 			$i++;
