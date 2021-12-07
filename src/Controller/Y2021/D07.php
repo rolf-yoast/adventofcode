@@ -63,13 +63,7 @@ class D07 extends AbstractController {
 		while($i <= $itirations){
 			$fuel = 0;
 			foreach($positions as $position){
-				if($position > $i){
-					$moves = $position - $i;
-				}
-
-				if($position < $i){
-					$moves = $i - $position;
-				}
+				$moves = abs($position - $i);
 
 				$fuel += $moves*($moves+1)/2;
 			}
